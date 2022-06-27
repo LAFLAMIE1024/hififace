@@ -7,8 +7,8 @@ checkpoint:
     every_n_train_steps: 40000
 
 wandb:
-  project: ""
-  entity: ""
+  project: "hififace"
+  entity: "marcocheung"
 
 trainer:
   gradient_clip_val: 0
