@@ -2,7 +2,6 @@
 >![](./assets/front_final.png)
 >
 > Image source: *[HifiFace: 3D Shape and Semantic Prior Guided High Fidelity Face Swapping](https://arxiv.org/abs/2106.09965)* (figure 1, pg. 1)
-
 ![issueBadge](https://img.shields.io/github/issues/mindslab-ai/hififace)   ![starBadge](https://img.shields.io/github/stars/mindslab-ai/hififace)   ![repoSize](https://img.shields.io/github/repo-size/mindslab-ai/hififace)  ![lastCommit](https://img.shields.io/github/last-commit/mindslab-ai/hififace) 
 
 This repository is an unofficial implementation of the face swapping model proposed by _Wang et. al_ in their paper [HifiFace: 3D Shape and Semantic Prior Guided High Fidelity Face Swapping](https://arxiv.org/abs/2106.09965). This implementation makes use of the [Pytorch Lighting](https://www.pytorchlightning.ai/) library, a light-weight wrapper for [PyTorch](https://pytorch.org/).
@@ -44,16 +43,17 @@ rm -rf nvdiffrast
 This Dockerfile was inspired by [@yuzhou164](https://github.com/yuzhou164), [this](https://github.com/sicxu/Deep3DFaceRecon_pytorch/issues/2#issuecomment-884087625) issue from [Deep3DFaceRecon_pytorch](https://github.com/sicxu/Deep3DFaceRecon_pytorch).
 
 ### Pre-Trained Model for Deep3DFace PyTorch
-Follow the guideline in [Prepare prerequisite models](https://github.com/sicxu/Deep3DFaceRecon_pytorch#prepare-prerequisite-models)
+Follow the guideline in [Prepare prerequisite models](https://github.com/sicxu/Deep3DFaceRecon_pytorch#prepare-prerequisite-models).
 
 Set up at `./mode/Deep3DFaceRecon_pytorch/`
 
 ### Pre-Trained Models for ArcFace
-We used official Arcface per-trained pytorch [implementation](https://github.com/deepinsight/insightface/tree/415da817d127319a99aeb84927f2cd0fcbb3366c/recognition/arcface_torch)
+We used official Arcface per-trained pytorch [implementation](https://github.com/deepinsight/insightface/tree/415da817d127319a99aeb84927f2cd0fcbb3366c/recognition/arcface_torch).
 Download pre-trained checkpoint from [onedrive](https://1drv.ms/u/s!AswpsDO2toNKq0lWY69vN58GR6mw?e=p9Ov5d) (IResNet-100 trained on MS1MV3)
 
 ### Download HifiFace Pre-Trained Model
 [google drive link](https://drive.google.com/file/d/1tZitaNRDaIDK1MPOaQJJn5CivnEIKMnB/view?usp=sharing)
+
 trained on VGGFace2, 300K iterations
 
 ## Training
@@ -62,10 +62,11 @@ trained on VGGFace2, 300K iterations
 We aligned the face images with the landmark extracted by [3DDFA_V2](https://github.com/cleardusk/3DDFA_V2). The code will be added.
 
 #### Face Segmentation Map
-After finishing aligning the face images, you need to get the face segmentation map for each face images. We used face segmentation model that [PSFRGAN](https://github.com/chaofengc/PSFRGAN) provides. You can use their code and pre-trained model.
+After finishing aligning the face images, you need to get the face segmentation map for each face images. We used face segmentation model that [PSFRGAN](https://github.com/chaofengc/PSFRGAN) provides. You can use their codes and pre-trained model.
 
 #### Dataset Folder Structure
 Each face image and the corresponding segmentation map should have the same name and the same relative path from the top-level directory.
+
 ```python
 face_image_dataset_folder
 └───identity1
