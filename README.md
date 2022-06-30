@@ -65,7 +65,20 @@ This model was trained on VGGFace2, 300K iterations
 We aligned the face images with the landmark extracted by [3DDFA_V2](https://github.com/cleardusk/3DDFA_V2). The code will be added.
 
 #### Face Segmentation Map
-After finishing aligning the face images, you need to get the face segmentation map for each face images. We used face segmentation model provided by [PSFRGAN](https://github.com/chaofengc/PSFRGAN). You can use their codes and pre-trained model.
+After finishing aligning the face images, you need to get the face segmentation map for each face images. We used face segmentation model provided by [PSFRGAN](https://github.com/chaofengc/PSFRGAN). You can use their codes and pre-trained mode
+
+Here are the codes I ran on colab to download the whole repo, do not forget to [download their pre-trained model](https://drive.google.com/drive/folders/1Ubejhxd2xd4fxGc_M_LWl3Ux6CgQd9rP) too.
+
+```python
+!git clone https://github.com/chaofengc/PSFR-GAN.git
+%cd PSFR-GAN
+
+# Here you need to make a new directory
+!mkdir pretrain_models 
+
+# You just need to add a shortcut to your own google drive to put all those pre-trained models into this directory
+!cp -r /content/drive/MyDrive/PSFR-GAN_pretrain_models/* /content/PSFR-GAN/pretrain_models/ 
+```
 
 #### Dataset Folder Structure
 Each face image and the corresponding segmentation map should have the same name and the same relative path from the top-level directory.
