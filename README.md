@@ -23,7 +23,7 @@ And we use VGGFace2_224 downloaded from Simswap to train this hififace from scra
 
 ### Model
 The paper proposes two versions of HifiFace model based on the output image size: 256x256 and 512x512 (referred to as Ours-256 and Ours-512 in the paper). The 512x512 model uses an extra data preprocessing before training. In this open source project, we implement the 256x256 model.
-For the discriminator, the original paperuses the discriminator from [StarGAN v2](https://arxiv.org/abs/1912.01865). Our implementation uses the multi-scale discriminator from [SPADE](https://arxiv.org/abs/1903.07291).
+For the discriminator, the original paper uses the discriminator from [StarGAN v2](https://arxiv.org/abs/1912.01865). Our implementation uses the multi-scale discriminator from [SPADE](https://arxiv.org/abs/1903.07291).
 
 
 ## Installation
