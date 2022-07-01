@@ -47,7 +47,7 @@ This Dockerfile was inspired by [@yuzhou164](https://github.com/yuzhou164), [thi
 ### Pre-Trained Model for Deep3DFace PyTorch (3D face reconstruction network in 3D Shape-Aware Identity Extractor)
 Follow the guideline in [Prepare prerequisite models](https://github.com/sicxu/Deep3DFaceRecon_pytorch#prepare-prerequisite-models).
 
-Set up at `./modeL/Deep3DFaceRecon_pytorch/`
+Set up at `./model/Deep3DFaceRecon_pytorch/`
 
 ### Pre-Trained Models for ArcFace (face recognition network in 3D Shape-Aware Identity Extractor)
 We used official Arcface per-trained pytorch [implementation](https://github.com/deepinsight/insightface/tree/415da817d127319a99aeb84927f2cd0fcbb3366c/recognition/arcface_torch).
