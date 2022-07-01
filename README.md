@@ -44,12 +44,12 @@ rm -rf nvdiffrast
 ```
 This Dockerfile was inspired by [@yuzhou164](https://github.com/yuzhou164), [this](https://github.com/sicxu/Deep3DFaceRecon_pytorch/issues/2#issuecomment-884087625) issue from [Deep3DFaceRecon_pytorch](https://github.com/sicxu/Deep3DFaceRecon_pytorch).
 
-### Pre-Trained Model for Deep3DFace PyTorch
+### Pre-Trained Model for Deep3DFace PyTorch (3D face reconstruction network in 3D Shape-Aware Identity Extractor)
 Follow the guideline in [Prepare prerequisite models](https://github.com/sicxu/Deep3DFaceRecon_pytorch#prepare-prerequisite-models).
 
 Set up at `./mode/Deep3DFaceRecon_pytorch/`
 
-### Pre-Trained Models for ArcFace
+### Pre-Trained Models for ArcFace (face recognition network in 3D Shape-Aware Identity Extractor)
 We used official Arcface per-trained pytorch [implementation](https://github.com/deepinsight/insightface/tree/415da817d127319a99aeb84927f2cd0fcbb3366c/recognition/arcface_torch).
 
 Download pre-trained checkpoint from [onedrive](https://1drv.ms/u/s!AswpsDO2toNKq0lWY69vN58GR6mw?e=p9Ov5d) (IResNet-100 trained on MS1MV3)
