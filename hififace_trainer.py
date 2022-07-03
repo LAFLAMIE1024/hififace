@@ -38,6 +38,9 @@ checkpoint_callback = ModelCheckpoint(
 
 model_hparams = OmegaConf.load(args.model_config)
 hififace_model = HifiFace(model_hparams)
+# Here is the other possible way to load a pretrained model (?
+# hififace_model = HifiFace.load_from_checkpoint(args.resume_checkpoint_path, hp=hififace_model)
+## BUT HERE IS THE PROBLEM -> hyperparameters are not suitable for fine tuning
 
 if args.wandb_resume == None:
     resume = 'allow'
