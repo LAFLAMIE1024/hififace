@@ -48,7 +48,7 @@ dataset:
       parsing_root: "./vggface2/vggface2_crop_arcfacealign_224_aligned"
       same_rate: 50
     dataloader:
-      batch_size: 4
+      batch_size: 8
       num_workers: 32
       drop_last: True
       shuffle: True
