@@ -115,7 +115,8 @@ class RealismLoss(nn.Module):
     def forward(self, m_tar, m_low, m_r, i_t, i_r, i_low, i_cycle, d_r, same):
         same = same.unsqueeze(-1).unsqueeze(-1)
 
-        segmentation_loss = self.l1(F.interpolate(m_tar, scale_factor=0.25, mode='bilinear'), m_low) + self.l1(m_tar, m_r)
+        segmentation_loss = self.l1(F.interpolate(m_tar, scale_factor=0.25, mode='bilinear'), m_low) + self.l1(m_tar, m_r) # F.interpolate -> resize operation in paper R(M_tar) (dilate the mask of the target image)
+        
         reconstruction_loss = self.l1(i_r * same, i_t * same) + self.l1(i_low * same, F.interpolate(i_t, scale_factor=0.25, mode='bilinear') * same)
         cycle_loss = self.l1(i_t, i_cycle)
         lpips_loss = self.loss_fn_vgg(i_t * same, i_r * same).mean()
