@@ -13,11 +13,13 @@ class ResBlock(nn.Module):
         super(ResBlock, self).__init__()
 
         main_module_list = []
+        
         main_module_list += [
             nn.InstanceNorm2d(in_channel),
             nn.LeakyReLU(0.2),
             nn.Conv2d(in_channel, out_channel, kernel_size=3, stride=1, padding=1),
             ]
+        
         if down_sample:
             main_module_list.append(nn.AvgPool2d(kernel_size=2))
         elif up_sample:
@@ -28,13 +30,15 @@ class ResBlock(nn.Module):
             nn.LeakyReLU(0.2),
             nn.Conv2d(out_channel, out_channel, kernel_size=3, stride=1, padding=1),
         ]
+        
         self.main_path = nn.Sequential(*main_module_list)
-
         side_module_list = [nn.Conv2d(in_channel, out_channel, kernel_size=1, stride=1, padding=0)]
+        
         if down_sample:
             side_module_list.append(nn.AvgPool2d(kernel_size=2))
         elif up_sample:
             side_module_list.append(nn.Upsample(scale_factor=2, mode="bilinear"))
+            
         self.side_path = nn.Sequential(*side_module_list)
 
     def forward(self, x):
@@ -63,6 +67,7 @@ class AdaIn(nn.Module):
 class AdaInResBlock(nn.Module):
     def __init__(self, in_channel, out_channel, up_sample=False):
         super(AdaInResBlock, self).__init__()
+        
         self.vector_size = 257 + 512
         self.up_sample = up_sample
 
@@ -74,6 +79,7 @@ class AdaInResBlock(nn.Module):
             nn.LeakyReLU(0.2),
             nn.Conv2d(in_channel, out_channel, kernel_size=3, stride=1, padding=1),
         ]
+        
         if up_sample:
             main_module_list.append(nn.Upsample(scale_factor=2, mode="bilinear"))
         self.main_path1 = nn.Sequential(*main_module_list)
@@ -84,6 +90,7 @@ class AdaInResBlock(nn.Module):
         )
 
         side_module_list = [nn.Conv2d(in_channel, out_channel, kernel_size=1, stride=1, padding=0)]
+        
         if up_sample:
             side_module_list.append(nn.Upsample(scale_factor=2, mode="bilinear"))
         self.side_path = nn.Sequential(*side_module_list)
@@ -102,6 +109,7 @@ class AdaInResBlock(nn.Module):
 class Encoder(nn.Module):
     def __init__(self):
         super(Encoder, self).__init__()
+        
         self.conv_first = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1)
 
         self.channel_list = [64, 128, 256, 512, 512, 512, 512, 512]
@@ -131,7 +139,6 @@ class Decoder(nn.Module):
 
         for i in range(5):
             self.block_list.append(AdaInResBlock(self.channel_list[i], self.channel_list[i+1], up_sample=self.up_sample[i]))
-
 
     def forward(self, x, id_vector):
         for i in range(5):
@@ -186,9 +193,11 @@ class SemanticFacialFusionModule(nn.Module):
 class ShapeAwareIdentityExtractor(nn.Module):
     def __init__(self, f_3d_checkpoint_path, f_id_checkpoint_path):
         super(ShapeAwareIdentityExtractor, self).__init__()
+        
         self.f_3d = ReconNetWrapper(net_recon='resnet50', use_last_fc=False)
         self.f_3d.load_state_dict(torch.load(f_3d_checkpoint_path, map_location='cpu')['net_recon'])
         self.f_3d.eval()
+        
         self.f_id = iresnet100(pretrained=False, fp16=False)
         self.f_id.load_state_dict(torch.load(f_id_checkpoint_path, map_location='cpu'))
         self.f_id.eval()
@@ -250,6 +259,7 @@ class Generator(nn.Module):
         return i_r, i_low, m_r, m_low
 
     def forward(self, i_source, i_target):
+        
         id_vector = self.id_extractor(i_source, i_target)
         z_enc, x = self.encoder(i_target)
         z_dec = self.decoder(x, id_vector)
