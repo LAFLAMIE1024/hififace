@@ -1,9 +1,9 @@
 import wandb
 
 import torch
-
 import torch.nn as nn
 import torch.nn.functional as F
+
 from .arcface_torch.backbones.iresnet import iresnet100
 import lpips
 
@@ -71,8 +71,10 @@ class MultiScaleGANLoss(nn.Module):
                 return input.mean()
 
     def __call__(self, input, target_is_real, for_discriminator=True):
+        
         # computing loss is a bit complicated because |input| may not be
         # a tensor, but list of tensors in case of multiscale discriminator
+        
         if isinstance(input, list):
             loss = 0
             for pred_i in input:
@@ -107,21 +109,20 @@ class SIDLoss(nn.Module):
 class RealismLoss(nn.Module):
     def __init__(self):
         super(RealismLoss, self).__init__()
+        
         self.loss_fn_vgg = lpips.LPIPS(net='vgg')
         self.l1 = nn.L1Loss()
-
         self.adv_loss = MultiScaleGANLoss()
 
     def forward(self, m_tar, m_low, m_r, i_t, i_r, i_low, i_cycle, d_r, same):
         same = same.unsqueeze(-1).unsqueeze(-1)
-
-        segmentation_loss = self.l1(F.interpolate(m_tar, scale_factor=0.25, mode='bilinear'), m_low) + self.l1(m_tar, m_r) # F.interpolate -> resize operation in paper R(M_tar) (dilate the mask of the target image)
         
+        segmentation_loss = self.l1(F.interpolate(m_tar, scale_factor=0.25, mode='bilinear'), m_low) + self.l1(m_tar, m_r) # F.interpolate : resize operation in paper R(M_tar) (dilate the mask of the target image)
         reconstruction_loss = self.l1(i_r * same, i_t * same) + self.l1(i_low * same, F.interpolate(i_t, scale_factor=0.25, mode='bilinear') * same)
         cycle_loss = self.l1(i_t, i_cycle)
         lpips_loss = self.loss_fn_vgg(i_t * same, i_r * same).mean()
         adversarial_loss = self.adv_loss(d_r, True, for_discriminator=False)
-
+        
         realism_loss = adversarial_loss + 100 * segmentation_loss + 20 * reconstruction_loss + cycle_loss + 5 * lpips_loss
 
         return realism_loss, {"segmentation_loss": segmentation_loss,
@@ -135,9 +136,11 @@ class RealismLoss(nn.Module):
 class GLoss(nn.Module):
     def __init__(self, f_3d_checkpoint_path, f_id_checkpoint_path, realism_config, sid_config):
         super(GLoss, self).__init__()
+        
         self.f_3d = ReconNetWrapper(net_recon='resnet50', use_last_fc=False)
         self.f_3d.load_state_dict(torch.load(f_3d_checkpoint_path, map_location='cpu')['net_recon'])
         self.f_3d.eval()
+        
         self.face_model = ParametricFaceModel()
 
         self.f_id = iresnet100(pretrained=False, fp16=False)
