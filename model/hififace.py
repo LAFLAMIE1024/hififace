@@ -2,12 +2,11 @@ import random
 
 import torch
 import torch.nn as nn
-
 import torch.nn.functional as F
 
 from .arcface_torch.backbones.iresnet import iresnet100
-
 from .Deep3DFaceRecon_pytorch.models.networks import ReconNetWrapper
+
 class ResBlock(nn.Module):
     def __init__(self, in_channel, out_channel, down_sample=False, up_sample=False):
         super(ResBlock, self).__init__()
