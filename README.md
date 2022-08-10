@@ -28,23 +28,24 @@ For the discriminator, the original paper uses the discriminator from [StarGAN v
 
 ## Installation
 
-### Build Docker Image
-```shell
+``` shell
 git clone https://github.com/mindslab-ai/hififace 
 cd hififace
+
 git clone https://github.com/sicxu/Deep3DFaceRecon_pytorch && git clone https://github.com/NVlabs/nvdiffrast && git clone https://github.com/deepinsight/insightface.git
+
 cp -r insightface/recognition/arcface_torch/ Deep3DFaceRecon_pytorch/models/
 cp -r insightface/recognition/arcface_torch/ ./model/
 rm -rf insightface
 cp -rf 3DMM/* Deep3DFaceRecon_pytorch
 mv Deep3DFaceRecon_pytorch model/
+
 rm -rf 3DMM
-docker build -t hififace:latent .
 rm -rf nvdiffrast
 ```
-This Dockerfile was inspired by [@yuzhou164](https://github.com/yuzhou164), [this](https://github.com/sicxu/Deep3DFaceRecon_pytorch/issues/2#issuecomment-884087625) issue from [Deep3DFaceRecon_pytorch](https://github.com/sicxu/Deep3DFaceRecon_pytorch).
 
 ### Pre-Trained Model for Deep3DFace PyTorch (3D face reconstruction network in 3D Shape-Aware Identity Extractor)
+
 Follow the guideline in [Prepare prerequisite models](https://github.com/sicxu/Deep3DFaceRecon_pytorch#prepare-prerequisite-models).
 
 Set up at `./model/Deep3DFaceRecon_pytorch/`
@@ -131,25 +132,26 @@ Here I created a wandb account named 'marcocheung' and a project called 'hififac
     * wandb: fill out your wandb entity and project name
     
 
-### Run Docker Container
-```shell
-docker run -it --ipc host --gpus all -v /PATH_TO/hififace:/workspace -v /PATH_TO/DATASET/FOLDER:/DATA --name hififace hififace:latent
-```
-
 ### Run Training Code
+
 ```shell
 python hififace_trainer.py --model_config config/model.yaml --train_config config/trainer.yaml -n hififace
 ```
 
 ## Inference
+
 ### Single Image
+
 ```shell
 python hififace_inference --gpus 0 --model_config config/model.yaml --model_checkpoint_path hififace_opensouce_299999.ckpt --source_image_path assets/inference_samples/01_source.png --target_image_path assets/inference_samples/01_target.png --output_image_path ./01_result.png
 ```
-### All Posible Pairs of Images in Directory 
+
+### All Posible Pairs of Images in Directory
+
 ```shell
 python hififace_inference --gpus 0 --model_config config/model.yaml --model_checkpoint_path hififace_opensouce_299999.ckpt  --input_directory_path assets/inference_samples --output_image_path ./result.png
 ```
+
 ### Interpolation
 ```shell
 # interpolates both the identity and the 3D shape.
