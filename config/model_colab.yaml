@@ -2,8 +2,8 @@ generator:
   target: "model.hififace.Generator"
   params:
     identity_extractor_config:
-      f_3d_checkpoint_path: "/content/hififace/model/Deep3DFaceRecon_pytorch/checkpoints/epoch_20.pth"
-      f_id_checkpoint_path: "/content/hififace/model/Deep3DFaceRecon_pytorch/checkpoints/ms1mv3_arcface_r100_fp16_backbone.pth"
+      f_3d_checkpoint_path: "./model/Deep3DFaceRecon_pytorch/checkpoints/epoch_20.pth"
+      f_id_checkpoint_path: "./model/Deep3DFaceRecon_pytorch/checkpoints/ms1mv3_arcface_r100_fp16_backbone.pth"
 
   optimizer:
     target: "torch.optim.AdamW"
@@ -29,8 +29,8 @@ discriminator:
 g_loss:
   target: "model.loss.GLoss"
   params:
-    f_3d_checkpoint_path: "/content/hififace/model/Deep3DFaceRecon_pytorch/checkpoints/epoch_20.pth"
-    f_id_checkpoint_path: "/content/hififace/model/Deep3DFaceRecon_pytorch/checkpoints/ms1mv3_arcface_r100_fp16_backbone.pth"
+    f_3d_checkpoint_path: "./model/Deep3DFaceRecon_pytorch/checkpoints/epoch_20.pth"
+    f_id_checkpoint_path: "./model/Deep3DFaceRecon_pytorch/checkpoints/ms1mv3_arcface_r100_fp16_backbone.pth"
     sid_config:
       {}
     realism_config:
@@ -44,11 +44,11 @@ dataset:
   train:
     target: "dataset.HifiFaceParsingTrainDataset"
     params:
-      img_root: "/content/content/dataset/vggface2/vggface2_224_subset"
-      parsing_root: "/content/content/dataset/vggface2/vggface2_crop_arcfacealign_224_aligned"
+      img_root: "./vggface2/vggface2_224_subset"
+      parsing_root: "./vggface2/vggface2_crop_arcfacealign_224_aligned"
       same_rate: 50
     dataloader:
-      batch_size: 16
+      batch_size: 8
       num_workers: 32
       drop_last: True
       shuffle: True
@@ -56,8 +56,8 @@ dataset:
   validation:
     target: "dataset.HifiFaceParsingValDataset"
     params:
-      img_root: "/content/content/dataset/vggface2/vggface2_subset_val"
-      parsing_root: "/content/content/dataset/vggface2/vggface2_subset_parse_val"
+      img_root: "./vggface2/vggface2_subset_val"
+      parsing_root: "./vggface2/vggface2_subset_parse_val"
     dataloader:
       batch_size: 1
       shuffle: False
