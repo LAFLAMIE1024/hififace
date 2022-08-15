@@ -16,5 +16,4 @@ trainer:
   num_sanity_val_steps: 1
   fast_dev_run: False
   val_check_interval: 400
-  progress_bar_refresh_rate: 1
   benchmark: True
