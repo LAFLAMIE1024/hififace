@@ -112,7 +112,7 @@ face_segmentation_mask_folder
 |   ...
 ```
 As I said, I planned to train on VGGFace2_224 provided by SimSwap. However, it's still too large for me and such time-consuming to parse each of this picture. So, I took about  760 identities out of this dataset and preprocess them with the models link offered by mindslab.ai .
-And here is [my own cleaned dataset](https://drive.google.com/file/d/1Ef2HiXyqtJ7Kko3oGSufl1mo1x2NqBK2/view?usp=sharing)
+And here is [my own cleaned dataset](https://drive.google.com/file/d/1tHjQALxc4q4klr9fKVwEjG31Ci6yg3Bl/view?usp=sharing)
 
 ### Wandb
 [Wandb](https://www.wandb.com/) is a powerful tool to manage your model training. 
